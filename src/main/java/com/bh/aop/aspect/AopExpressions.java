@@ -18,5 +18,4 @@ public class AopExpressions {
     @Pointcut("forDaoPackage() && !(getter() || setter())")
     public void forDaoPackageNoGetterSetter() {}
 
-    
 }

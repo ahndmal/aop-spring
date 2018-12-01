@@ -1,38 +1,38 @@
 package com.bh.aop.aspect;
 
+import com.bh.aop.Account;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
+@Order(2)
 public class MyDemoLoggingAspect {
-
-	@Pointcut("execution(* com.bh.aop.dao.*.*(..))")
-	private void forDaoPackage() {}
-
-	@Pointcut("execution(* com.bh.aop.dao.*.get*(..))")
-	private void getter() {}
-
-	@Pointcut("execution(* com.bh.aop.dao.*.set*(..))")
-	private void setter() {}
-
-	@Pointcut("forDaoPackage() && !(getter() || setter())")
-	private void forDaoPackageNoGetterSetter() {}
 	
-	@Before("forDaoPackageNoGetterSetter()")
-	public void beforeAddAccountAdvice() {		
-		System.out.println("\n=====>>> Executing @Before advice on method");		
-	}
-	
-	@Before("forDaoPackage()")
-	public void performApiAnalytics() {
-		System.out.println("\n=====>>> Performing API analytics");		
-	}
+	@Before("com.bh.aop.aspect.AopExpressions.forDaoPackageNoGetterSetter()")
+	public void beforeAddAccountAdvice(JoinPoint theJoinPoint) {
+		System.out.println("\n=====>>> Executing @Before advice on method");
 
-	@Before("forDaoPackage()")
-	public void logToCloudAsync() {
-		System.out.println("\n=====>>> Logging to Cloud in async");
+		MethodSignature methodSignature = (MethodSignature) theJoinPoint.getSignature();
+
+		System.out.println("Method " + methodSignature);
+
+		Object[] args = theJoinPoint.getArgs();
+
+		for (Object tempArg : args) {
+
+			System.out.println(tempArg);
+
+			if (tempArg instanceof Account) {
+
+				Account account = (Account) tempArg;
+
+				System.out.println(account.getLevel());
+			}
+		}
 	}
 }
