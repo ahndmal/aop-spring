@@ -22,8 +22,7 @@ public class AfterFinallyDemoApp {
 
 		try {
 
-			boolean tripWire = true;
-
+			boolean tripWire = false;
 			theAccounts = theAccountDAO.findAccounts(tripWire);
 
 		} catch (Exception exc) {
