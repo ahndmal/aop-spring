@@ -3,12 +3,27 @@ package com.bh.aop.dao;
 import com.bh.aop.Account;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class AccountDAO {
 
     private String name;
-
     private String serviceCode;
+
+    public List<Account> findAccounts() {
+
+        List<Account> myAccounts = new ArrayList<Account>();
+
+        Account account1 = new Account("John", "Silver");
+        Account account2 = new Account("Vasyl", "Gold");
+
+        myAccounts.add(account1);
+        myAccounts.add(account2);
+
+        return myAccounts;
+    }
 
 	public void addAccount(Account theAccount, boolean vipFlag) {
 
