@@ -22,8 +22,11 @@ public class AfterReturningDemoApp {
 		List<Account> theAccounts = theAccountDAO.findAccounts();
 
 		System.out.println("\n\nMain program : After ReturningDemoApp");
+
+		System.out.println(theAccounts);
+
+		System.out.println("\n");
 		
-		// close the context
 		context.close();
 	}
 }
