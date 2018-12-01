@@ -16,7 +16,9 @@ import java.util.List;
 @Order(2)
 public class MyDemoLoggingAspect {
 
-	@AfterReturning(pointcut = "*com.bh.aop.dao.AccountDAO.findAccounts(..)", returning = "result")
+	@AfterReturning(
+			pointcut = "execution(* com.bh.aop.dao.AccountDAO.findAccounts(..))",
+			returning = "result")
 	public void afterReturningFindAccountsAdvice(JoinPoint joinPoint, List<Account> result) {
 
 		String method = joinPoint.getSignature().toShortString();
@@ -24,8 +26,19 @@ public class MyDemoLoggingAspect {
 		System.out.println("\n=====>> Executing @AfterReturning on method " + method);
 
 		System.out.println("\n ===>> result is " + result);
+
+		convertAccountNamesToUpperCase(result);
 	}
-	
+
+	private void convertAccountNamesToUpperCase(List<Account> result) {
+
+		for (Account account : result) {
+
+			String upperName = account.getName().toUpperCase();
+			account.setName(upperName);
+		}
+	}
+
 	@Before("com.bh.aop.aspect.AopExpressions.forDaoPackageNoGetterSetter()")
 	public void beforeAddAccountAdvice(JoinPoint theJoinPoint) {
 		System.out.println("\n=====>>> Executing @Before advice on method");
