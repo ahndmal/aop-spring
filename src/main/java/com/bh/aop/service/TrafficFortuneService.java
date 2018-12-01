@@ -18,4 +18,12 @@ public class TrafficFortuneService {
         }
         return "Expect Heavy traffic this morning";
     }
+
+    public String getFortune(boolean tripWire) {
+
+        if (tripWire) {
+            throw new RuntimeException("Highway closed!");
+        }
+        return getFortune();
+    }
 }

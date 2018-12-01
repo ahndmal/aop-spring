@@ -4,8 +4,11 @@ import com.bh.aop.demo.DemoConfig;
 import com.bh.aop.service.TrafficFortuneService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import java.util.logging.Logger;
 
-public class AroundDemoApp {
+public class AroundHandleExceptionDemoApp {
+
+	private static Logger myLogger = Logger.getLogger(AroundHandleExceptionDemoApp.class.getName());
 
 	public static void main(String[] args) {
 
@@ -15,11 +18,13 @@ public class AroundDemoApp {
 
 		TrafficFortuneService trafficFortuneService = context.getBean("trafficFortuneService", TrafficFortuneService.class);
 
-		System.out.println("Calling getFortune");
+		myLogger.info("Calling getFortune");
+
+		boolean tripWire = true;
 
 		String data = trafficFortuneService.getFortune(tripWire);
 
-		System.out.println(data);
+		myLogger.info(data);
 		
 		context.close();
 	}
